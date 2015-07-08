@@ -18,6 +18,7 @@ sub instance_to_identifier {
 	die "instance_to_identifier not implemented by ${\(ref $self)}";
 }
 *to_id = \&instance_to_identifier;
+#sub to_id { goto &instance_to_identifier }
 
 sub instances_to_identifiers {
 	my $self = shift;
@@ -25,6 +26,7 @@ sub instances_to_identifiers {
 	return map { $self->instance_to_identifier($_) } @_;
 }
 *to_ids = \&instances_to_identifiers;
+#sub to_ids { goto &instances_to_identifiers }
 
 ##############################
 # Accesors
