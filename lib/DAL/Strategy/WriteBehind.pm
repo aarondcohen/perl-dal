@@ -24,7 +24,7 @@ sub load_multi {
 	my @uncached_identifers = Set::Functional::difference_by
 		{ $self->identifier_to_string($_) }
 		\@_,
-		[$self->to_ids(@cached_instances)];
+		[$self->to_identifiers(@cached_instances)];
 
 	my @stored_instances;
 	if (@uncached_identifiers) {

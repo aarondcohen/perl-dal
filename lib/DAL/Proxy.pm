@@ -14,11 +14,13 @@ sub new {
 
 sub proxy { (shift)->{_proxy} }
 
-sub instance_to_identifier   { (shift)->proxy->instance_to_identifier(shift) }
-sub instances_to_identifiers { (shift)->proxy->instances_to_identifiers(shift) }
+sub to_identifier  { (shift)->proxy->to_identifier(shift) }
+sub to_identifiers { (shift)->proxy->to_identifiers(@_) }
 
 sub load         { (shift)->proxy->load(shift) }
 sub load_multi   { (shift)->proxy->load_multi(@_) }
+sub reload       { (shift)->proxy->reload(shift) }
+sub reload_multi { (shift)->proxy->reload_multi(@_) }
 sub delete       { (shift)->proxy->delete(shift) }
 sub delete_multi { (shift)->proxy->delete_multi(@_) }
 sub save         { (shift)->proxy->save(shift) }

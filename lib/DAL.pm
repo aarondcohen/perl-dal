@@ -12,21 +12,17 @@ sub new {
 # Helpers
 ##############################
 
-sub instance_to_identifier {
+sub to_identifier {
 	my ($self, $instance) = (shift, shift);
 
 	die "instance_to_identifier not implemented by ${\(ref $self)}";
 }
-*to_id = \&instance_to_identifier;
-#sub to_id { goto &instance_to_identifier }
 
-sub instances_to_identifiers {
+sub to_identifiers {
 	my $self = shift;
 
-	return map { $self->instance_to_identifier($_) } @_;
+	return map { $self->to_identifier($_) } @_;
 }
-*to_ids = \&instances_to_identifiers;
-#sub to_ids { goto &instances_to_identifiers }
 
 ##############################
 # Accesors
@@ -47,17 +43,17 @@ sub load_multi {
 sub reload {
 	my ($self, $instance) = (shift, shift);
 
-	return $self->load($self->to_id($instance));
+	return $self->load($self->to_identifier($instance));
 }
 
 sub reload_multi {
 	my $self = shift;
 
-	return $self->load_multi($self->to_ids(@_));
+	return $self->load_multi($self->to_identifiers(@_));
 }
 
 ##############################
-# mutators
+# Mutators
 ##############################
 
 sub delete {

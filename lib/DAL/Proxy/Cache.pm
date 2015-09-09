@@ -1,6 +1,6 @@
 package DAL::Proxy::Cache;
 
-use parent 'DAL';
+use parent 'DAL::Proxy';
 
 sub new {
 	my ($class, %args) = @_;
