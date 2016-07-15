@@ -15,7 +15,7 @@ sub new {
 sub to_identifier {
 	my ($self, $instance) = (shift, shift);
 
-	die "instance_to_identifier not implemented by ${\(ref $self)}";
+	die "to_identifier not implemented by ${\(ref $self)}";
 }
 
 sub to_identifiers {
@@ -24,6 +24,9 @@ sub to_identifiers {
 	return map { $self->to_identifier($_) } @_;
 }
 
+sub clean {}
+sub validate {}
+
 ##############################
 # Accesors
 ##############################
@@ -31,13 +34,19 @@ sub to_identifiers {
 sub load {
 	my ($self, $identifier) = (shift, shift);
 
-	die "load not implemented by ${\(ref $self)}";
+	my $instance = $self->_load($identifier);
+	$self->clean($instance) if $instance;
+
+	return $instance;
 }
 
 sub load_multi {
 	my $self = shift;
 
-	return map { $self->load($_) } @_;
+	my @instances = $self->_load_multi(@_);
+	$self->clean($_) for grep { $_ } @instances;
+
+	return @instances;
 }
 
 sub reload {
@@ -59,13 +68,17 @@ sub reload_multi {
 sub delete {
 	my ($self, $instance) = (shift, shift);
 
-	die "delete not implemented by ${\(ref $self)}";
+	$self->_delete($instance);
+	$self->clean($instance);
+
+	return;
 }
 
 sub delete_multi {
 	my $self = shift;
 
-	$self->delete($_) for @_;
+	$self->_delete_multi(@_);
+	$self->clean($_) for @_;
 
 	return;
 }
@@ -73,13 +86,63 @@ sub delete_multi {
 sub save {
 	my ($self, $instance) = (shift, shift);
 
-	die "delete not implemented by ${\(ref $self)}";
+	$self->validate($instance);
+	$self->_save($instance);
+	$self->clean($instance);
+
+	return;
 }
 
 sub save_multi {
 	my $self = shift;
 
-	$self->save($_) for @_;
+	$self->validate($_) for @_;
+	$self->_save_multi(@_);
+	$self->clean($_) for @_;
+
+	return;
+}
+
+##############################
+# Implementation
+##############################
+
+sub _delete {
+	my ($self, $instance) = (shift, shift);
+
+	die "_delete not implemented by ${\(ref $self)}";
+}
+
+sub _delete_multi {
+	my $self = shift;
+
+	$self->_delete($_) for @_;
+
+	return;
+}
+
+sub _load {
+	my ($self, $identifier) = (shift, shift);
+
+	die "_load not implemented by ${\(ref $self)}";
+}
+
+sub _load_multi {
+	my $self = shift;
+
+	return map { $self->_load($_) } @_;
+}
+
+sub _save {
+	my ($self, $instance) = (shift, shift);
+
+	die "_save not implemented by ${\(ref $self)}";
+}
+
+sub _save_multi {
+	my $self = shift;
+
+	$self->_save($_) for @_;
 
 	return;
 }

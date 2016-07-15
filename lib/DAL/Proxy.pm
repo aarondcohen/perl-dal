@@ -17,13 +17,11 @@ sub proxy { (shift)->{_proxy} }
 sub to_identifier  { (shift)->proxy->to_identifier(shift) }
 sub to_identifiers { (shift)->proxy->to_identifiers(@_) }
 
-sub load         { (shift)->proxy->load(shift) }
-sub load_multi   { (shift)->proxy->load_multi(@_) }
-sub reload       { (shift)->proxy->reload(shift) }
-sub reload_multi { (shift)->proxy->reload_multi(@_) }
-sub delete       { (shift)->proxy->delete(shift) }
-sub delete_multi { (shift)->proxy->delete_multi(@_) }
-sub save         { (shift)->proxy->save(shift) }
-sub save_multi   { (shift)->proxy->save_multi(@_) }
+sub _load         { (shift)->proxy->_load(shift) }
+sub _load_multi   { (shift)->proxy->_load_multi(@_) }
+sub _delete       { (shift)->proxy->_delete(shift) }
+sub _delete_multi { (shift)->proxy->_delete_multi(@_) }
+sub _save         { (shift)->proxy->_save(shift) }
+sub _save_multi   { (shift)->proxy->_save_multi(@_) }
 
 1;

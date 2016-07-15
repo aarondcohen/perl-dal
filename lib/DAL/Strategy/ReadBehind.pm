@@ -2,49 +2,49 @@ package DAL::Strategy::ReadBehind;
 
 use parent 'DAL::Strategy';
 
-sub load {
+sub _load {
 	my ($self, $identifier) = (shift, shift);
 
-	return $self->cache_layer->load($identifier);
+	return $self->cache_layer->_load($identifier);
 }
 
-sub load_multi {
+sub _load_multi {
 	my $self = shift;
 
-	return $self->cache_layer->load_multi(@_);
+	return $self->cache_layer->_load_multi(@_);
 }
 
-sub delete {
+sub _delete {
 	my ($self, $instance) = (shift, shift);
 
-	$self->storage_layer->delete($instance);
-	$self->cache_layer->delete($instance);
+	$self->storage_layer->_delete($instance);
+	$self->cache_layer->_delete($instance);
 
 	return;
 }
 
-sub delete_multi {
+sub _delete_multi {
 	my $self = shift;
 
-	$self->storage_layer->delete_multi(@_);
-	$self->cache_layer->delete_multi(@_);
+	$self->storage_layer->_delete_multi(@_);
+	$self->cache_layer->_delete_multi(@_);
 
 	return;
 }
 
-sub save {
+sub _save {
 	my ($self, $instance) = (shift, shift);
 
-	$self->storage_layer->save($instance);
+	$self->storage_layer->_save($instance);
 	#TODO: enqueue write to cache
 
 	return;
 }
 
-sub save_multi {
+sub _save_multi {
 	my $self = shift;
 
-	$self->storage_layer->save_multi(@_);
+	$self->storage_layer->_save_multi(@_);
 	#TODO: enqueue writes to cache
 
 	return
